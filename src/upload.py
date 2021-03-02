@@ -14,7 +14,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__)) # project abs path
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("upload.html")
 
 
 @app.route("/upload_page", methods=["GET"])

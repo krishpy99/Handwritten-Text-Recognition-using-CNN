@@ -57,48 +57,37 @@ class Model:
 
         # First Layer: Conv (5x5) + Pool (2x2) - Output size: 400 x 32 x 64
         with tf.compat.v1.name_scope('Conv_Pool_1'):
-            kernel = tf.Variable(
-                tf.random.truncated_normal([5, 5, 1, 64], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=cnnIn4d, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([5, 5, 1, 64], stddev=0.1))
+            conv = tf.nn.conv2d(input=cnnIn4d, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             learelu = tf.nn.leaky_relu(conv, alpha=0.01)
             pool = tf.nn.max_pool2d(input=learelu, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='VALID')
 
         # Second Layer: Conv (5x5) + Pool (1x2) - Output size: 400 x 16 x 128
         with tf.compat.v1.name_scope('Conv_Pool_2'):
-            kernel = tf.Variable(tf.random.truncated_normal(
-                [5, 5, 64, 128], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([5, 5, 64, 128], stddev=0.1))
+            conv = tf.nn.conv2d(input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             learelu = tf.nn.leaky_relu(conv, alpha=0.01)
             pool = tf.nn.max_pool2d(input=learelu, ksize=(1, 1, 2, 1), strides=(1, 1, 2, 1), padding='VALID')
 
         # Third Layer: Conv (3x3) + Pool (2x2) + Simple Batch Norm - Output size: 200 x 8 x 128
         with tf.compat.v1.name_scope('Conv_Pool_BN_3'):
-            kernel = tf.Variable(tf.random.truncated_normal(
-                [3, 3, 128, 128], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([3, 3, 128, 128], stddev=0.1))
+            conv = tf.nn.conv2d(input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             mean, variance = tf.nn.moments(x=conv, axes=[0])
-            batch_norm = tf.nn.batch_normalization(
-                conv, mean, variance, offset=None, scale=None, variance_epsilon=0.001)
+            batch_norm = tf.nn.batch_normalization(conv, mean, variance, offset=None, scale=None, variance_epsilon=0.001)
             learelu = tf.nn.leaky_relu(batch_norm, alpha=0.01)
             pool = tf.nn.max_pool2d(input=learelu, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='VALID')
 
         # Fourth Layer: Conv (3x3) - Output size: 200 x 8 x 256
         with tf.compat.v1.name_scope('Conv_4'):
-            kernel = tf.Variable(tf.random.truncated_normal(
-                [3, 3, 128, 256], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([3, 3, 128, 256], stddev=0.1))
+            conv = tf.nn.conv2d(input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             learelu = tf.nn.leaky_relu(conv, alpha=0.01)
 
         # Fifth Layer: Conv (3x3) + Pool(2x2) - Output size: 100 x 4 x 256
         with tf.compat.v1.name_scope('Conv_Pool_5'):
-            kernel = tf.Variable(tf.random.truncated_normal(
-                [3, 3, 256, 256], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=learelu, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([3, 3, 256, 256], stddev=0.1))
+            conv = tf.nn.conv2d(input=learelu, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             learelu = tf.nn.leaky_relu(conv, alpha=0.01)
             pool = tf.nn.max_pool2d(input=learelu, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='VALID')
 
@@ -117,13 +106,10 @@ class Model:
 
         # Seventh Layer: Conv (3x3) + Pool (1x2) - Output size: 100 x 1 x 512
         with tf.compat.v1.name_scope('Conv_Pool_7'):
-            kernel = tf.Variable(tf.random.truncated_normal(
-                [3, 3, 512, 512], stddev=0.1))
-            conv = tf.nn.conv2d(
-                input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
+            kernel = tf.Variable(tf.random.truncated_normal([3, 3, 512, 512], stddev=0.1))
+            conv = tf.nn.conv2d(input=pool, filters=kernel, padding='SAME', strides=(1, 1, 1, 1))
             learelu = tf.nn.leaky_relu(conv, alpha=0.01)
             pool = tf.nn.max_pool2d(input=learelu, ksize=(1, 1, 2, 1), strides=(1, 1, 2, 1), padding='VALID')
-
             self.cnnOut4d = pool
 
     def setupRNN(self):

@@ -9,18 +9,8 @@
 <body>
 
 <div class="container" id="outer">
-        {% include "logo_include.html" %}
     <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-
-        </nav>
         <h3 class="text-muted">Handwritten Line Text Recognition</h3>
-
     </div>
     <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -28,12 +18,6 @@
                 <input id="file-picker" type="file" name="file" accept="image/*" multiple>
                 <p class="help-block">Supported Image are '.png', 'jpg'</p>
                 <div id="msg" style="color: blue;font-size: 20px"></div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsPrediction" id="withoutLM" value="bestPath" checked>
-                    Only use Best Path Decoding &mdash;fast prediction but not be accurate
-                  </label>
-                </div>
                 <button type="submit" value="Upload" id="upload-button" class="btn btn-primary">Submit</button>
             </div>
 
